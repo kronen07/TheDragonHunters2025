@@ -6,6 +6,8 @@
 #
 
 import wpilib as wp
+import rev
+
 
 class MyRobot(wp.TimedRobot):
     def robotInit(self):
@@ -15,7 +17,7 @@ class MyRobot(wp.TimedRobot):
         """
         # defines the camera function
         wp.CameraServer.launch()
-
+        self.motor: rev.SparkMax = rev.SparkMax(2, rev.SparkBase.MotorType.kBrushed)
 
         self.controller = wp.XboxController(0)
         self.timer = wp.Timer()
@@ -30,6 +32,7 @@ class MyRobot(wp.TimedRobot):
 
     def teleopInit(self):
         """This function is called once each time the robot enters teleoperated mode."""
+        self.motor.set(self.controller.getLeftX)
 
     def teleopPeriodic(self):
         """This function is called periodically during teleoperated mode."""
